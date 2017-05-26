@@ -15,3 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('/posts','PostsController');
+// Route::resource('/comments','CommentsController');
+Route::post('/posts/{post}/comments','CommentsController@store');
