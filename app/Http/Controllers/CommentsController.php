@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\comment;
 
-class PostsController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +15,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        // $posts=Post::all();
-        $posts=post::orderBy('created_at','desc')->get();
-
-       return view('posts.index',compact('posts'));
+        //
     }
 
     /**
@@ -27,7 +25,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        //
     }
 
     /**
@@ -36,17 +34,16 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$post)
     {
-       
-       $this->validate($request,['title'=>'required','body'=>'required']);
         
-       $post=new Post;
-       $post->title=$request->get('title');
-       $post->body=$request->get('body');
-       $post->save();
-       return redirect('/posts');
-
+        $this->validate($request,['body'=>'required|min:2']);
+        $comment=new comment;
+        $comment->body=$request->get('body');
+        $comment->post_id=$post;
+        $comment->save();
+        return back();
+        
     }
 
     /**
@@ -57,8 +54,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post=Post::findOrFail($id);
-        return view('posts.show',compact('post'));
+        //
     }
 
     /**
@@ -69,15 +65,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $post=Post::find($id);
-        return view('posts.edit',compact('post'));
+        //
     }
-     public function delete($id)
-    {
-        $post=Post::find($id);
-        return view('posts.delete',compact('post'));
-    }
-
 
     /**
      * Update the specified resource in storage.
@@ -88,12 +77,7 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $post=Post::find($id);
-       $post->title=$request->get('title');
-       $post->body=$request->get('body');
-       $post->save();
-       return redirect('/posts');
-       
+        //
     }
 
     /**
@@ -104,9 +88,6 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-       $post=Post::find($id);
-       
-       $post->delete();
-       return redirect('/posts');
+        //
     }
 }

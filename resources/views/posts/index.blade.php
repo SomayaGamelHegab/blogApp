@@ -9,6 +9,7 @@
 	      
 	      <th>Title</th>
 	      <th>Body</th>
+	      <th>Created At</th>
 	      <th>Actions</th>
 	    </tr>
 	  </thead>
@@ -18,6 +19,7 @@
 	     <tr>
 	     	<td>{{ $post->title }}</td>
 	     	<td>{{ $post->body }}</td>
+	     	<td>{{ $post->created_at->toDayDateTimeString() }}</td>
 	     	<td>
 	     	
 	     	{!! Form::open(['method' => 'DELETE', 'route' => ['posts.destroy', $post->id]]) !!}
